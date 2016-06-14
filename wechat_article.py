@@ -28,17 +28,14 @@ for each_search_result in soup.select("h4 a"):
     comment_params['signature'] = signature
     article = requests.get(each_search_result['href'])
     article_soup = BeautifulSoup(article.text, "lxml")
-    comment_info = json.loads(requests.get(comment_url, comment_params).text)
-    print comment_info
-    print article_soup.select("#post-date")[0].get_text().strip(' ')[0:10]
-    wechat_article = Article(article_soup.select("#post-date")[0].get_text().strip(' ')[0:10],
+    wechat_article = Article(signature,
+                             article_soup.select("#post-date")[0].get_text().strip(' ')[0:10],
                              article_soup.select("#post-user")[0].get_text(),
                              article_soup.title.text,
                              article_soup.select("#js_content")[0].get_text(),
-                             comment_info['read_num'],
-                             comment_info['like_num'],
                              keyword
                              )
+    print wechat_articles
     session.add(wechat_article)
 session.commit()
     

@@ -11,6 +11,7 @@ class Article(Base):
     __tablename__ = "articles"
     
     id = Column(Integer, primary_key=True)
+    signature = Column(String(100))
     date = Column(Date())
     author = Column(String(60))
     title = Column(String(300))
@@ -19,17 +20,16 @@ class Article(Base):
     likenum = Column(Integer())
     keyword = Column(String(50))
     
-    def __init__(self, date, author, title, content, readnum, likenum, keyword):
+    def __init__(self, signature, date, author, title, content, readnum, likenum, keyword):
+        self.signature = signature
         self.date = date
         self.author = author
         self.title = title
         self.content = content
-        self.readnum = readnum
-        self.likenum = likenum
         self.keyword = keyword
     
     def __repr__(self):
-        return "<Article(date='%s', author='%s', title='%s', content='%s', readnum='%s', likenum='%s', keyword='%s')>" % (self.date, self.author, self.title, self.content, self.readnum, self.likenum, self.keyword)
+        return "<Article(signature='%s', date='%s', author='%s', title='%s', content='%s', keyword='%s')>" % (self.signature, self.date, self.author, self.title, self.content, self.keyword)
     
     
 if __name__ == "__main__":  
