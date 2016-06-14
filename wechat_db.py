@@ -14,7 +14,10 @@ class Article(Base):
     __tablename__ = "articles"
     
     id = Column(Integer, primary_key=True)
-    signature = Column(String(200))
+    signature = Column(String(200), unique=True, nullable=False)
+    timestamp = Column(Integer())
+    src = Column(SmallInteger())
+    ver = Column(SmallInteger())
     date = Column(Date())
     author = Column(String(60))
     title = Column(String(300))
@@ -23,8 +26,11 @@ class Article(Base):
     likenum = Column(Integer())
     keyword = Column(String(50))
     
-    def __init__(self, signature, date, author, title, content, keyword):
+    def __init__(self, signature, timestamp, src, ver, date, author, title, content, keyword):
         self.signature = signature
+        self.timestamp = timestamp
+        self.src = src
+        self.ver = ver
         self.date = date
         self.author = author
         self.title = title
