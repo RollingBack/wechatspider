@@ -2,6 +2,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, SmallInteger, Date, Text
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 Base = declarative_base()
 
@@ -11,7 +14,7 @@ class Article(Base):
     __tablename__ = "articles"
     
     id = Column(Integer, primary_key=True)
-    signature = Column(String(100))
+    signature = Column(String(200))
     date = Column(Date())
     author = Column(String(60))
     title = Column(String(300))
@@ -20,7 +23,7 @@ class Article(Base):
     likenum = Column(Integer())
     keyword = Column(String(50))
     
-    def __init__(self, signature, date, author, title, content, readnum, likenum, keyword):
+    def __init__(self, signature, date, author, title, content, keyword):
         self.signature = signature
         self.date = date
         self.author = author

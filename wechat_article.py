@@ -35,7 +35,7 @@ for each_search_result in soup.select("h4 a"):
                              article_soup.select("#js_content")[0].get_text(),
                              keyword
                              )
-    print wechat_articles
+    print wechat_article
     session.add(wechat_article)
 session.commit()
     
