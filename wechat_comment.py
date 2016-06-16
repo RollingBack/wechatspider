@@ -25,6 +25,7 @@ def update_comment_info(signature, timestamp, src, ver):
     article = session.query(Article).filter(Article.signature == signature).first()
     article.readnum = info[0]
     article.likenum = info[1]
+    article.updated_at = int(time())
     session.commit()
     
 if __name__ == '__main__':
