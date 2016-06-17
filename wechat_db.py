@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, SmallInteger, Date, Text
+from sqlalchemy import Column, Integer, String, SmallInteger, Date, Text, BLOB
 from time import time
 import sys
 reload(sys)
@@ -15,14 +15,14 @@ class Article(Base):
     __tablename__ = "articles"
     
     id = Column(Integer, primary_key=True)
-    signature = Column(String(200), unique=True, nullable=False)
+    signature = Column(String(180), unique=True, nullable=False)
     timestamp = Column(Integer, nullable=False)
     src = Column(SmallInteger, nullable=False)
     ver = Column(SmallInteger, nullable=False)
     date = Column(Date, nullable=False)
-    author = Column(String(60), nullable=False, server_default='')
-    title = Column(String(300), nullable=False, server_default='')
-    content = Column(Text(), nullable=False)
+    author = Column(BLOB(60), nullable=False)
+    title = Column(BLOB(300), nullable=False)
+    content = Column(BLOB(), nullable=False)
     readnum = Column(Integer, nullable=False, server_default='0')
     likenum = Column(Integer, nullable=False, server_default='0')
     keyword = Column(String(50), nullable=False)
@@ -39,12 +39,18 @@ class Article(Base):
         self.title = title
         self.content = content
         self.keyword = keyword
+        self.readnum = 0
+        self.likenum = 0
         self.created_at = int(time())
         self.updated_at = self.created_at
     
     def __repr__(self):
         return "<Article(signature='%s', date='%s', author='%s', title='%s', content='%s', keyword='%s')>" % (self.signature, self.date, self.author, self.title, self.content, self.keyword)
     
+    __table_args__ = {
+        'mysql_engine': 'InnoDB',
+        'mysql_charset': 'utf8mb4'
+    }    
     
 if __name__ == "__main__":  
     Base.metadata.create_all(engine)    
