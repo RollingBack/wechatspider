@@ -8,6 +8,8 @@ import jieba
 session = Session(engine)
 redis_client = Redis('127.0.0.1', 6379, 9)
 query = session.query(Article).all()
+jieba.set_dictionary('dict.txt.big.txt')
+jieba.enable_parallel(4)
 for each_artilce in query:
     title_words = jieba.cut(each_artilce.title)
     for each_word in title_words:
